@@ -1,2 +1,2 @@
-#!/bin/bash
-echo "ENSA SCHOOL" > "\*\\\'\"ENSA  School\"\'\\\*$\?\*\*\*\*\*:)"
+#!/bin/bash 
+echo "Holberton School" > "\*\\\'\"Holberton School\"\'\\\*$\?\*\*\*\*\*:)"
