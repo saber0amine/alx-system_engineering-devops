@@ -1,0 +1,24 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+  echo "Please provide a script file name as an argument."
+  exit 1
+fi
+
+# Check if the file already exists
+if [ -f "$1" ]; then
+  echo "File $1 already exists."
+else
+  # Create a new file with the given name
+  touch "$1"
+fi
+
+# Add some sample code to the file
+echo '#!/bin/bash' >> "$1"
+
+# Give executable permission to the file
+chmod +x "$1"
+
+# Open the file in the terminal
+vi "$1"
+
