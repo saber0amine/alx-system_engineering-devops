@@ -1,1 +1,1 @@
-# 0x06 Regular Expression - Ruby
+0x06-regular_expressions
