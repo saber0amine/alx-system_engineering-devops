@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-# script that configure the server redirections
-#
-sudo apt-get -y update;
-sudo apt-get -y install nginx;
-sudo ufw allow 'Nginx HTTP';
-sudo sh -c 'echo "Hello World!" > /var/www/html/index.nginx-debian.html';
-sudo sed -i '/listen 80 default_server;/a rewrite ^/redirect_me https://www.linkedin.com/in/mahmoud-hamdy-8b6825245/ permanent;' /etc/nginx/sites-available/default;
-sudo service nginx restart;
