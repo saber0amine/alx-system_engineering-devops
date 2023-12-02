@@ -1,1 +1,6 @@
-nuux.tech
+#!/usr/bin/env bash
+# Setup a Domain Name
+
+# Provide a placeholder domain name
+echo "example.tech"
+

@@ -18,7 +18,7 @@ sudo sed -i '/^}$/i \ \n\tlocation \/redirect_me {return 301 https:\/\/www.youtu
 
 # Configure custom 404 page
 sudo sed -i '/^}$/i \ \n\tlocation @404 {return 404 "Ceci n'\''est pas une page\\n";}' /etc/nginx/sites-available/default
-sudo sed -i 's/=404/@404/g' /etc/nginx/sites-available/default
+sudo sed -i '/^}$/i \ \n\terror_page 404 @404;' /etc/nginx/sites-available/default
 
 # Restart Nginx to apply the changes
 sudo service nginx restart
