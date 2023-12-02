@@ -1,9 +1,25 @@
 #!/usr/bin/env bash
-#Install nginx web server and Redirection
+# Install nginx web server, Redirection, and Custom 404 Page
+
+# Update the package list
 sudo apt-get -y update
+
+# Install nginx
 sudo apt-get -y install nginx
+
+# Create a backup of the default Nginx configuration file
+sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
+
+# Echo "Hello World!" into the default nginx HTML file
 sudo sh -c 'echo "Hello World!" > /var/www/html/index.nginx-debian.html'
+
+# Configure redirection for /redirect_me
 sudo sed -i '/^}$/i \ \n\tlocation \/redirect_me {return 301 https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4;}' /etc/nginx/sites-available/default
+
+# Configure custom 404 page
 sudo sed -i '/^}$/i \ \n\tlocation @404 {return 404 "Ceci n'\''est pas une page\\n";}' /etc/nginx/sites-available/default
 sudo sed -i 's/=404/@404/g' /etc/nginx/sites-available/default
-sudo service nginx start
+
+# Restart Nginx to apply the changes
+sudo service nginx restart
+
