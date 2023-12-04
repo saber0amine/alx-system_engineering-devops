@@ -19,7 +19,7 @@ backend http_back
 EOF
 )
 
-echo "$haproxy_config" | sudo dd status=none of=/etc/haproxy/haproxy.cfg
+echo "$haproxy_config" | sudo tee /etc/haproxy/haproxy.cfg > /dev/null
 
 # Restart HAProxy
 sudo service haproxy restart

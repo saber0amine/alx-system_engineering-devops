@@ -17,7 +17,7 @@ server {
     location / {
         try_files \$uri \$uri/ =404;
     }
-    if (\$request_filename ~ redirect_me){
+    if (\$request_uri ~ /redirect_me){
         rewrite ^ https://th3-gr00t.tk/ permanent;
     }
     error_page 404 /error_404.html;
@@ -28,7 +28,7 @@ server {
 EOF
 )
 
-echo "$custom_header_config" | sudo dd status=none of=/etc/nginx/sites-enabled/default
+echo "$custom_header_config" | sudo tee /etc/nginx/sites-enabled/default > /dev/null
 
 # Restart Nginx
 sudo service nginx restart
