@@ -14,8 +14,8 @@ frontend http_front
 
 backend http_back
     balance roundrobin
-    server web-01 [STUDENT_ID]-web-01:80 check
-    server web-02 [STUDENT_ID]-web-02:80 check
+    server web-01 376668-web-01:80 check
+    server web-02 376668-web-02:80 check
 EOF
 )
 
@@ -23,4 +23,3 @@ echo "$haproxy_config" | sudo tee /etc/haproxy/haproxy.cfg > /dev/null
 
 # Restart HAProxy
 sudo service haproxy restart
-
