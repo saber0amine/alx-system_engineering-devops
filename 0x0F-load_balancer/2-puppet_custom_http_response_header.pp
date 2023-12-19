@@ -1,30 +1,16 @@
-# Setup New Ubuntu server with nginx
-# and add a custom HTTP header
-
-exec { 'update system':
-        command => '/usr/bin/apt-get update',
+# instal and configure nginx
+exec {'update':
+  command => '/usr/bin/apt-get update',
 }
-
-package { 'nginx':
-	ensure => 'installed',
-	require => Exec['update system']
+-> package { 'nginx':
+  ensure => installed,
 }
-
-file {'/var/www/html/index.html':
-	content => 'Hello World!'
+-> file_line { 'header_served_by':
+  path  => '/etc/nginx/sites-available/default',
+  match => '^server {',
+  line  => "server {\n\tadd_header X-Served-By \"${hostname}\";",
+  multiple => false,
 }
-
-exec {'redirect_me':
-	command => 'sed -i "24i\	rewrite ^/redirect_me https://th3-gr00t.tk/ permanent;" /etc/nginx/sites-available/default',
-	provider => 'shell'
-}
-
-exec {'HTTP header':
-	command => 'sed -i "25i\	add_header X-Served-By \$hostname;" /etc/nginx/sites-available/default',
-	provider => 'shell'
-}
-
-service {'nginx':
-	ensure => running,
-	require => Package['nginx']
+-> exec {'run':
+  command => '/usr/sbin/service nginx restart',
 }

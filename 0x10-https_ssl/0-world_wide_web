@@ -1,45 +1,15 @@
 #!/usr/bin/env bash
-
-# Function to display information about a subdomain
-display_info() {
-    local subdomain=$1
-    local domain=$2
-
-    # Use dig to get information about the subdomain
-    local result=$(dig ${subdomain}.${domain} +short)
-
-    # Determine the record type (A, CNAME, etc.)
-    local record_type=$(echo "$result" | awk '{print toupper($1)}')
-
-    # Determine the destination IP or value
-    local destination=$(echo "$result" | awk '{print $NF}')
-
-    # Display the information
-    echo "The subdomain ${subdomain} is a ${record_type} record and points to ${destination}"
+# Comment
+prints () {
+    dig "$1" | grep -A1 'ANSWER SECTION:' | sed -r "s/$1./$2/g" | awk -F" " 'NR==2 { print "The subdomain " $1 " is a " $4 " record and points to " $5 }'
 }
-
-# Main script
-main() {
-    local domain=$1
-    local subdomain=$2
-
-    # If subdomain is not provided, display information for default subdomains
-    if [ -z "${subdomain}" ]; then
-        display_info www "${domain}"
-        display_info lb-01 "${domain}"
-        display_info web-01 "${domain}"
-        display_info web-02 "${domain}"
-    else
-        # Display information for the specified subdomain
-        display_info "${subdomain}" "${domain}"
-    fi
-}
-
-# Check if the correct number of arguments is provided
-if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
-    echo "Usage: $0 <domain> [subdomain]"
-    exit 1
+if [ $# -eq 1 ];
+then
+    prints "www.$1" "www"
+    prints "lb-01.$1" "lb-01"
+    prints "web-01.$1" "web-01"
+    prints "web-02.$1" "web-02"
+elif [ $# -eq 2 ];
+then
+     prints "$2.$1" "$2"
 fi
-
-# Call the main function with provided arguments
-main "$1" "$2"
