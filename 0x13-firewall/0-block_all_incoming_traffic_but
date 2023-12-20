@@ -1,10 +1,21 @@
 #!/usr/bin/env bash
-# install ufw and enable ports 22, 443, 8080
 
+# Install ufw if not already installed
 sudo apt-get update
-sudo apt-get install ufw
+sudo apt-get install -y ufw
+
+# Set default policies
 sudo ufw default deny incoming
-sudo ufw allow 22
-sudo ufw allow 443
-sudo ufw allow 8080
-sudo ufw -y enable
+sudo ufw default allow outgoing
+
+# Allow incoming traffic on specific ports
+sudo ufw allow 22/tcp     # Allow SSH
+sudo ufw allow 443/tcp    # Allow HTTPS SSL
+sudo ufw allow 80/tcp     # Allow HTTP
+
+# Enable ufw
+sudo ufw enable
+
+# Display ufw status to confirm the rules
+sudo ufw status
+
