@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
-# fix errors in nginx server 
-docker run --name=my-nginx -p 80:80 -d nginx
+# script that configures a server to listen on port 80
+cd /etc/nginx/sites-enabled/ || exit
+rm default
+ln -s /etc/nginx/sites-available/default default
+service nginx restart
