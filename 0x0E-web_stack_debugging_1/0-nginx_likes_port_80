@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
-# im comment :)
-ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-sudo service nginx restart
+# script that configures a server to listen on port 80
+cd /etc/nginx/sites-enabled/ || exit
+rm default
+ln -s /etc/nginx/sites-available/default default
+service nginx restart
