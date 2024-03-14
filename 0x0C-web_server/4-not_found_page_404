@@ -1,22 +1,9 @@
 #!/usr/bin/env bash
-#404 page
-if ! command -v nginx &> /dev/null; then
-    echo "Nginx is not installed. Please install Nginx first."
-    exit 1
-fi
-not_found_page="/var/www/html/404.html"
-
-echo "Ceci n'est pas une page" > "$not_found_page"
-
-sed -i '/server {/r /dev/stdin' /etc/nginx/sites-available/default <<EOF
-# Custom 404 page
-    error_page 404 /404.html;
-
-    location = /404.html {
-        root /usr/share/nginx/html;
-        internal;
-    }
-EOF
-
-service nginx restart
-
+#Install nginx web server and Redirection
+sudo apt-get -y update
+sudo apt-get -y install nginx
+sudo sh -c 'echo "Hello World!" > /var/www/html/index.nginx-debian.html'
+sudo sed -i '/^}$/i \ \n\tlocation \/redirect_me {return 301 https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4;}' /etc/nginx/sites-available/default
+sudo sed -i '/^}$/i \ \n\tlocation @404 {return 404 "Ceci n'\''est pas une page\\n";}' /etc/nginx/sites-available/default
+sudo sed -i 's/=404/@404/g' /etc/nginx/sites-available/default
+sudo service nginx start
