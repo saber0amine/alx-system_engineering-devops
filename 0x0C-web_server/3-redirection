@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
-
-# Install nginx if not already installed
+#condig the redirection page
 if ! command -v nginx &> /dev/null; then
     apt-get update
     apt-get install -y nginx
 fi
 
-# Create a configuration file for the redirection
 cat > /etc/nginx/sites-available/redirect_me <<EOF
 server {
     listen 80;
@@ -14,13 +12,9 @@ server {
     return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
 }
 EOF
-
-# Enable the redirection configuration
 ln -sf /etc/nginx/sites-available/redirect_me /etc/nginx/sites-enabled/redirect_me
 
-# Test the Nginx configuration
 nginx -t
 
-# Reload Nginx to apply the changes
 service nginx reload
 
