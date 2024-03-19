@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
-# Run software as another user
-
+# script that runs the whoami command under the user passed as an argument
 sudo -u "$1" whoami
