@@ -1,14 +1,7 @@
 #!/usr/bin/env bash
-# Stop Nginx service if it's running
+#test 
 
-systemctl stop nginx
-
-# Update Nginx configuration to run as nginx user
-sed -i 's/^user .*/user nginx;/' /etc/nginx/nginx.conf
-
-# Update Nginx configuration to listen on all active IPs on port 8080
-sed -i '/^ *listen/ s/$/ default_server;/' /etc/nginx/sites-available/default
-
-# Start Nginx service
-systemctl start nginx
+sed -i '/user/d' ~/devops_script/copy_nginx_file.txt
+sed -i '/worker_process/a user nginx' ~/devops_script/copy_nginx_file.txt
+sed -i '/listen/a listen [::]:8080;' ~/devops_script/copy_nginx_file.txt
 
