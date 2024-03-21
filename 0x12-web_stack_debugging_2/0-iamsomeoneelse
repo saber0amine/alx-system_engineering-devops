@@ -1,10 +1,4 @@
 #!/usr/bin/env bash
-# script that runs the whoami command under the user passed as an argument
+# Run software as another user
 
-if [ $# -ne 1 ]; then
-    echo "Usage: $0 <username>"
-    exit 1
-fi
-
-sudo su "$1"  whoami
-
+sudo -u "$1" whoami
