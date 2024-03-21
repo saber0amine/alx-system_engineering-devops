@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-#test 
-
-sed -i '/user/d' ~/devops_script/copy_nginx_file.txt
-sed -i '/worker_process/a user nginx' ~/devops_script/copy_nginx_file.txt
-sed -i '/listen/a listen [::]:8080;' ~/devops_script/copy_nginx_file.txt
+# Fixes the issue with the server
+chmod 644 /etc/nginx/nginx.conf
+sed -Ei 's/\s*#?\s*user .*/user nginx;/' /etc/nginx/nginx.conf
+sed -Ei 's/(listen (\[::\]:)?80) /\180 /' /etc/nginx/sites-enabled/default
+pkill apache2
+su nginx -s /bin/bash -c 'service nginx restart'
 
