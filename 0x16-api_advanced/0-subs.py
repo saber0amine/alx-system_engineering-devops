@@ -41,4 +41,3 @@ def number_of_subscribers(subreddit):
         num_of_subs = info["data"]["subscribers"]
 
     return (int(num_of_subs))
-
